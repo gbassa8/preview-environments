@@ -5,3 +5,7 @@
 !README.md
 !/docs/
 !/docs/*.md
+
+!/terraform/
+!/terraform/*.tf
+!/terraform/.terraform.lock.hcl

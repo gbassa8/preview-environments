@@ -16,11 +16,11 @@ Después, cuando entienda bien el flujo, rehacerlo mejor y recién ahí subir un
 
 Quiero llegar a esto:
 
-- abrir una PR
+- abrir un PR
 - construir una imagen
 - desplegar un entorno aislado
 - tener una URL única para probarlo
-- destruir ese entorno al cerrar la PR
+- destruir ese entorno al cerrar el PR
 
 ## Plan
 

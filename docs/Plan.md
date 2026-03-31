@@ -18,6 +18,7 @@ This follows two ideas from the references:
 - Rebuild once after learning pain points.
 - Use `GHCR` for images.
 - Use `Cloudflare` for DNS.
+- Keep external services explicit: `GitHub`, `GHCR`, `Cloudflare`, and optionally `Supabase`.
 - Keep the first preview-env version simple.
 - Do not use this repo as the first workload.
 
@@ -29,7 +30,7 @@ Define the target clearly before touching infra.
 - Use `Terraform` for the AWS foundation only.
 - Use a single-node cluster first; no HA.
 - Use `ArgoCD`, `Traefik`, `cert-manager`, `ExternalDNS`, and `Sealed Secrets`.
-- Use a toy stateless app first.
+- Use a toy stateless app first; add `Supabase` only when the app needs data.
 - Keep this project for a later onboarding phase.
 
 ## Phase 0.5 - Provision AWS Foundation With `Terraform`
@@ -59,10 +60,6 @@ Tasks:
 Deliverable:
 
 - Reproducible AWS foundation that can be destroyed and recreated cleanly.
-
-Estimated time:
-
-- `0.5-1 day`
 
 Estimated time:
 
@@ -142,6 +139,7 @@ Deliverable:
 - TLS works.
 - `ArgoCD` syncs apps from git.
 - Sealed secret workflow works.
+- `Cloudflare` and `GHCR` are connected to the platform flow.
 
 Estimated time:
 
@@ -181,6 +179,12 @@ Estimated time:
 ## Phase 5 - Deploy a Toy App End to End
 
 Use a tiny stateless app as the first workload.
+
+Data strategy:
+
+- v1: no database if possible
+- v2: add external data only if the app needs it
+- if preview data isolation is needed later, prefer one `Supabase` project with separate schemas over a full database per PR
 
 Tasks:
 
@@ -249,6 +253,7 @@ Important details:
 - Label resources with things like `preview=true` and `pr=123`.
 - Keep config templated and minimal.
 - Do not start with full per-PR databases.
+- If data isolation becomes necessary, prefer per-PR schemas in `Supabase` before more complex database provisioning.
 
 Deliverable:
 
@@ -276,6 +281,7 @@ Tasks:
 - Let `ArgoCD` sync the preview app.
 - Post preview URL back to the PR.
 - Delete preview namespace/app on PR close.
+- If the app needs data, create and clean up the matching schema in `Supabase`.
 
 Safer progression:
 
@@ -311,7 +317,7 @@ Repo-specific work likely needed:
 Recommended first cut for this repo:
 
 - web only
-- shared dev Supabase or isolated schema
+- shared dev `Supabase` or isolated schema
 - no Gmail in preview
 - no full background jobs unless truly needed
 
@@ -391,6 +397,7 @@ Total rough timeline:
 - `ArgoCD` manages apps declaratively.
 - DNS and TLS are automatic.
 - Image flow uses `GHCR`.
+- External services are part of the design: `GitHub`, `GHCR`, `Cloudflare`, and `Supabase` when needed.
 - PR creates namespace and URL automatically.
 - PR close destroys preview automatically.
 - At least one toy app works end to end.
