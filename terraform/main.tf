@@ -6,8 +6,9 @@ variable "key_name" {
   type = string
 }
 
-variable "allowed_ssh_cidr" {
-  type = string
+variable "tailscale_auth_key" {
+  type      = string
+  sensitive = true
 }
 
 data "aws_vpc" "default" {
@@ -27,13 +28,6 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_security_group" "k3s_sg" {
   vpc_id = data.aws_vpc.default.id
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = [var.allowed_ssh_cidr]
-  }
 
   ingress {
     from_port   = 80
@@ -59,21 +53,16 @@ resource "aws_security_group" "k3s_sg" {
 
 resource "aws_instance" "k3s_master" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.small"
+  instance_type = "t3.medium"
   key_name      = var.key_name
 
-  user_data = <<-EOF
-    #!/bin/bash
-    curl -sfL https://get.k3s.io | sh -
-  EOF
+  user_data = templatefile("${path.module}/cloud-init.yaml", {
+    tailscale_auth_key = var.tailscale_auth_key
+  })
 
   vpc_security_group_ids = [aws_security_group.k3s_sg.id]
 
   tags = {
-    Name = "master_node"
+    Name = "athenea"
   }
-}
-
-output "public_ip" {
-  value = aws_instance.k3s_master.public_ip
 }

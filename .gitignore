@@ -9,3 +9,7 @@
 !/terraform/
 !/terraform/*.tf
 !/terraform/.terraform.lock.hcl
+!/terraform/cloud-init.yaml
+
+!/scripts/
+!/scripts/*.sh

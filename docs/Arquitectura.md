@@ -38,6 +38,7 @@ Servicios fuera del cluster:
 
 - Cloudflare para DNS publico
 - GHCR para guardar las imagenes
+- Tailscale para acceso privado de administracion
 - Supabase como base de datos externa cuando la app lo necesite
 
 Supabase no es obligatorio si la app de prueba es stateless.
@@ -52,6 +53,8 @@ Dos flujos:
 - GitHub Actions para construir y publicar imagenes
 
 ArgoCD toma el estado deseado desde git y lo aplica en el cluster.
+
+El acceso administrativo al server y al API server del cluster viaja por la red privada de Tailscale, no por puertos administrativos publicos.
 
 ## Aplicaciones
 
