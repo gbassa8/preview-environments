@@ -2,31 +2,23 @@
 
 Este repo es un laboratorio para aprender infraestructura en AWS y levantar entornos de preview por pull request.
 
-La idea es empezar simple:
-
-- una VM en AWS
-- `k3s`
-- `ArgoCD`
-- `Traefik`, `cert-manager`, `ExternalDNS` y `Sealed Secrets`
-- una app pequeña para probar todo
-
-Después, cuando entienda bien el flujo, rehacerlo mejor y recién ahí subir una app real.
-
 ## Objetivo
 
 Quiero llegar a esto:
 
-- abrir un PR
-- construir una imagen
-- desplegar un entorno aislado
-- tener una URL única para probarlo
-- destruir ese entorno al cerrar el PR
+- Abrir un PR
+- Construir una imagen
+- Desplegar un entorno aislado
+- Tener una URL única para probarlo
+- Destruir ese entorno al cerrar el PR
 
 ## Plan
 
-- [ ] Crear la base en AWS con `Terraform`
-- [ ] Instalar `k3s` en una sola VM
-- [ ] Añadir los componentes base del clúster
-- [ ] Desplegar una app de prueba
-- [ ] Automatizar previews por PR
-- [ ] Rehacer la estructura con lo aprendido
+- [x] Base reproducible en AWS con `Terraform` + `k3s`
+- [x] Acceso privado y manejo local del cluster
+- [ ] `cert-manager`, `ExternalDNS`, `ArgoCD`, `Sealed Secrets`
+- [ ] GitOps
+- [ ] App de prueba con DNS y TLS
+- [ ] `Supabase` para bases de datos
+- [ ] Preview environments por pull request
+- [ ] Flujo completo con una app real

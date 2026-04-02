@@ -8,8 +8,13 @@
 
 !/terraform/
 !/terraform/*.tf
-!/terraform/.terraform.lock.hcl
 !/terraform/cloud-init.yaml
+!/terraform/.terraform.lock.hcl
+
+!/gitops/
+!/gitops/application.yaml
+!/gitops/athenea/
+!/gitops/athenea/**
 
 !/scripts/
 !/scripts/*.sh
