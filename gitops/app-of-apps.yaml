@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/gbassa8/preview-environments.git
     targetRevision: HEAD
-    path: gitops/athenea
+    path: gitops/apps
   destination:
     server: https://kubernetes.default.svc
   syncPolicy:

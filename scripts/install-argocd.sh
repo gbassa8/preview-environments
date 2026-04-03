@@ -9,4 +9,4 @@ kubectl apply --server-side -n argocd -f https://raw.githubusercontent.com/argop
 kubectl -n argocd rollout status deploy/argocd-server
 kubectl -n argocd rollout status deploy/argocd-repo-server
 
-kubectl apply -f gitops/application.yaml
+kubectl apply -f gitops/app-of-apps.yaml

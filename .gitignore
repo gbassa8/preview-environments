@@ -12,9 +12,9 @@
 !/terraform/.terraform.lock.hcl
 
 !/gitops/
-!/gitops/application.yaml
-!/gitops/athenea/
-!/gitops/athenea/**
+!/gitops/app-of-apps.yaml
+!/gitops/apps/
+!/gitops/apps/*
 
 !/scripts/
 !/scripts/*.sh

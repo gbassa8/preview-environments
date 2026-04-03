@@ -1,31 +1,34 @@
 # ArgoCD
 
-- `Terraform` levanta la base en AWS
-- `cloud-init` prepara la VM
-- `ArgoCD` instala y mantiene lo que vive dentro de Kubernetes
+## Rol En El Proyecto
 
-Eso incluye:
+`ArgoCD` es la capa que maneja lo que vive dentro de Kubernetes.
 
-- `cert-manager`
-- `ExternalDNS`
-- `Sealed Secrets`
-- Aplicaciones
-- Más adelante preview environments
+La separación actual es:
 
-## Workflow
+- `Terraform` levanta la infraestructura en AWS
+- `cloud-init` prepara la VM e instala `k3s` + `Tailscale`
+- `ArgoCD` sincroniza el estado del cluster desde git
 
-Sin `ArgoCD`, cada vez que haga `destroy/apply` de terraform voy a tener que reinstalar el software del cluster a mano.
+La idea es que, después de instalar `ArgoCD`, los componentes del cluster no se agreguen a mano sino desde este repo.
 
-Con `ArgoCD`, el flujo pasa a ser:
+En este repo se va a usar un patrón simple de app-of-apps: una `Application` raíz apunta al path principal de GitOps y desde ahí ArgoCD crea y sincroniza las aplicaciones hijas del cluster.
 
-1. Levantar la VM y `k3s`
-2. Recuperar kubeconfig
-3. Instalar `ArgoCD`
-4. Dejar que `ArgoCD` instale el resto
+## Instalación 
+
+Con el setup actual, el flujo queda así:
+
+1. `terraform apply`
+2. Script para recuperar kubeconfig
+3. Script para instalar `ArgoCD`
+4. El script corre `kubectl apply -f gitops/app-of-apps.yaml`
+5. `ArgoCD` sincroniza `gitops/apps`
+
+Eso evita reinstalar a mano los componentes del cluster después de cada `destroy/apply`.
 
 ## Acceso Inicial
 
-Para entrar, usar port-forward:
+Para entrar rápido a la UI, usar port-forward:
 
 ```bash
 kubectl -n argocd port-forward svc/argocd-server 8080:443
