@@ -11,6 +11,11 @@ variable "tailscale_auth_key" {
   sensitive = true
 }
 
+variable "eip_allocation_id" {
+  # crear ip en la consola para evitar perder la ip fija con el destroy
+  type = string
+}
+
 data "aws_vpc" "default" {
   default = true
 }
@@ -65,4 +70,9 @@ resource "aws_instance" "k3s_master" {
   tags = {
     Name = "athenea"
   }
+}
+
+resource "aws_eip_association" "k3s_master" {
+  instance_id   = aws_instance.k3s_master.id
+  allocation_id = var.eip_allocation_id
 }

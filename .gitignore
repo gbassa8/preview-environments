@@ -17,6 +17,8 @@
 !/gitops/apps/*
 !/gitops/platform/
 !/gitops/platform/**
+!/gitops/services/
+!/gitops/services/**
 
 !/scripts/
 !/scripts/*.sh
