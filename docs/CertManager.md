@@ -35,6 +35,46 @@ Con el setup actual, la idea es que el flujo quede así:
 
 Para este proyecto conviene usar `ClusterIssuer` y no `Issuer`, porque la configuración tiene que servir para varios namespaces y más adelante para previews.
 
+## Token De Cloudflare
+
+Para resolver `DNS-01`, `cert-manager` necesita un API token de Cloudflare con permisos mínimos sobre la zona.
+
+Permisos:
+
+- `Zone:DNS:Edit`
+- `Zone:Zone:Read`
+
+Alcance:
+
+- solo la zona que se va a usar, por ejemplo `midominio.com`
+
+Paso a paso en Cloudflare:
+
+1. Entrar a Cloudflare.
+2. Ir a `Profile` -> `API Tokens`.
+3. Click en `Create Token`.
+4. Elegir `Create Custom Token`.
+5. Poner un nombre, por ejemplo `cert-manager-midominio-com`.
+6. Agregar permisos `Zone` -> `DNS` -> `Edit`.
+7. Agregar permisos `Zone` -> `Zone` -> `Read`.
+8. En `Zone Resources`, elegir `Include` -> `Specific zone` -> `midominio.com`.
+9. Revisar que no tenga más permisos ni más zonas.
+10. Click en `Create Token`.
+11. Copiar el token en ese momento, porque Cloudflare no lo vuelve a mostrar completo.
+
+Después, guardarlo en Kubernetes como un `Secret` en el namespace `cert-manager`.
+
+Por ahora, la opción más simple es crearlo a mano con `kubectl`:
+
+```bash
+kubectl -n cert-manager create secret generic cloudflare-api-token \
+  --from-literal=api-token="$CLOUDFLARE_API_TOKEN"
+```
+
+Esto es temporal.
+
+La idea más adelante es resolver secretos de una forma más completa, para no depender de creación manual después de recrear la infra.
+
 ## Estado Esperado
 
 Al terminar esta etapa debería existir esto en el cluster:

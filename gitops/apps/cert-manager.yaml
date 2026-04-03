@@ -5,14 +5,17 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    repoURL: https://charts.jetstack.io
-    chart: cert-manager
-    targetRevision: v1.20.1
-    helm:
-      values: |
-        crds:
-          enabled: true
+  sources:
+    - repoURL: https://charts.jetstack.io
+      chart: cert-manager
+      targetRevision: v1.20.1
+      helm:
+        values: |
+          crds:
+            enabled: true
+    - repoURL: https://github.com/gbassa8/preview-environments.git
+      targetRevision: HEAD
+      path: gitops/platform/cert-manager/manifests
   destination:
     server: https://kubernetes.default.svc
     namespace: cert-manager
@@ -22,4 +25,3 @@ spec:
     automated:
       selfHeal: true
       prune: true
-
