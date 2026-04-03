@@ -6,6 +6,7 @@ mkdir -p "$HOME/.kube"
 ssh-keygen -R athenea >/dev/null 2>&1 || true
 
 # Esperar a que el server levante y k3s genere el kubeconfig
+printf 'Esperando a k3s...\n'
 until ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=accept-new -i "$HOME/.ssh/arch.pem" ubuntu@athenea "sudo test -f /etc/rancher/k3s/k3s.yaml" >/dev/null 2>&1; do
   sleep 2
 done
