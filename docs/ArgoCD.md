@@ -21,7 +21,7 @@ Con el setup actual, el flujo queda así:
 1. `terraform apply`
 2. Script para recuperar kubeconfig
 3. Script para instalar `ArgoCD`
-4. El script corre `kubectl apply -f gitops/app-of-apps.yaml`
+4. El script corre `kubectl apply -f gitops/apps/app-of-apps.yaml`
 5. `ArgoCD` sincroniza `gitops/apps`
 
 Eso evita reinstalar a mano los componentes del cluster después de cada `destroy/apply`.

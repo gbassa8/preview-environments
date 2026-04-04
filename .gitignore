@@ -13,7 +13,6 @@
 !/terraform/.terraform.lock.hcl
 
 !/gitops/
-!/gitops/app-of-apps.yaml
 !/gitops/apps/
 !/gitops/apps/*
 !/gitops/platform/

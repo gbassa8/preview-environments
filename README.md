@@ -16,9 +16,9 @@ Quiero llegar a esto:
 
 - [x] Base reproducible en AWS con `Terraform` + `k3s`
 - [x] Acceso privado y manejo local del cluster
-- [ ] `cert-manager`, `ExternalDNS`, `ArgoCD`, `Sealed Secrets`
-- [ ] GitOps
-- [ ] App de prueba con DNS y TLS
+- [x] `cert-manager`, `ExternalDNS`, `ArgoCD`, `Sealed Secrets`
+- [x] GitOps
+- [x] App de prueba con DNS y TLS
 - [ ] `Supabase` para bases de datos
 - [ ] Preview environments por pull request
 - [ ] Flujo completo con una app real

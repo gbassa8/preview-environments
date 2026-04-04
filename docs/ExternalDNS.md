@@ -10,7 +10,7 @@ Esto evita depender de un wildcard DNS tipo `*.preview...` que exista siempre au
 
 ## Configuración Actual
 
-- Usa la zona real `serviciosimpositivos.com.ar`
+- Usa la zona real `midominio.com`
 - Crea, actualiza y borra registros según el estado del cluster
 - Marca sus registros con TXT para no pisarse con otros controllers
 
@@ -25,7 +25,7 @@ Permisos mínimos:
 
 Alcance:
 
-- La zona `serviciosimpositivos.com.ar`
+- La zona `midominio.com`
 
 ## Cómo Usa Un Ingress
 
@@ -43,10 +43,10 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - app-prueba.preview.serviciosimpositivos.com.ar
+        - app-prueba.preview.midominio.com
       secretName: preview-wildcard-tls
   rules:
-    - host: app-prueba.preview.serviciosimpositivos.com.ar
+    - host: app-prueba.preview.midominio.com
       http:
         paths:
           - path: /
@@ -61,5 +61,5 @@ spec:
 ## Validar Creación
 
 ```bash
-dig app-prueba.preview.serviciosimpositivos.com.ar +short
+dig app-prueba.preview.midominio.com +short
 ```

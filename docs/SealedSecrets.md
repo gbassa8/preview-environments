@@ -96,20 +96,6 @@ Existe un script para restaurar el secret. Ese `Secret` es el que después usa e
 
 ## Cómo Crear Un SealedSecret
 
-No hace falta crear primero el `Secret` real en el cluster.
-
-Se puede generar el `SealedSecret` localmente y dejar que el controller cree el `Secret` cuando Argo lo aplique.
-
-El flujo genérico es este:
-
-1. Crear un `Secret` local en YAML con `--dry-run=client`.
-2. Pasarlo a `kubeseal`.
-3. Guardar el resultado como `SealedSecret`.
-4. Subir ese archivo al repo.
-5. Dejar que `ArgoCD` lo aplique.
-
-Ejemplo:
-
 ```bash
 kubectl -n namespace create secret generic mi-secret \
   --from-literal=clave=valor \
