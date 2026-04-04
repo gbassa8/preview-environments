@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-dns
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://kubernetes-sigs.github.io/external-dns/
+      chart: external-dns
+      targetRevision: 1.20.0
+      helm:
+        valueFiles:
+          - $values/gitops/platform/external-dns/values.yaml
+    - repoURL: https://github.com/gbassa8/preview-environments.git
+      targetRevision: HEAD
+      ref: values
+    - repoURL: https://github.com/gbassa8/preview-environments.git
+      targetRevision: HEAD
+      path: gitops/platform/external-dns/manifests
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: external-dns
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

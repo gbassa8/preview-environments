@@ -38,6 +38,8 @@ kind: Ingress
 metadata:
   name: app-prueba
   namespace: default
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: app-prueba.preview.serviciosimpositivos.com.ar
 spec:
   ingressClassName: traefik
   tls:

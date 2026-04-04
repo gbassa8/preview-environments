@@ -2,6 +2,24 @@
 hostname: athenea
 package_update: true
 
+write_files:
+  - path: /var/lib/rancher/k3s/server/manifests/traefik-config.yaml
+    permissions: "0644"
+    content: |
+      apiVersion: helm.cattle.io/v1
+      kind: HelmChartConfig
+      metadata:
+        name: traefik
+        namespace: kube-system
+      spec:
+        valuesContent: |-
+          providers:
+            kubernetesIngress:
+              publishedService:
+                enabled: false
+              ingressEndpoint:
+                ip: ${traefik_public_ip}
+
 runcmd:
   - curl -fsSL https://tailscale.com/install.sh | sh
   - systemctl enable --now tailscaled

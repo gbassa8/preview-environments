@@ -1,0 +1,19 @@
+provider:
+  name: cloudflare
+
+sources:
+  - ingress
+
+policy: sync
+registry: txt
+txtOwnerId: athenea
+
+domainFilters:
+  - serviciosimpositivos.com.ar
+
+env:
+  - name: CF_API_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: cloudflare-api-token
+        key: api-token

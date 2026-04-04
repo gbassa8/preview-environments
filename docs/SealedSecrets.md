@@ -111,7 +111,7 @@ El flujo genérico es este:
 Ejemplo:
 
 ```bash
-kubectl create secret generic mi-secret \
+kubectl -n namespace create secret generic mi-secret \
   --from-literal=clave=valor \
   --dry-run=client -o yaml \
   | kubeseal \

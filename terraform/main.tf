@@ -31,6 +31,10 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+data "aws_eip" "k3s_master" {
+  id = var.eip_allocation_id
+}
+
 resource "aws_security_group" "k3s_sg" {
   vpc_id = data.aws_vpc.default.id
 
@@ -63,6 +67,7 @@ resource "aws_instance" "k3s_master" {
 
   user_data = templatefile("${path.module}/cloud-init.yaml", {
     tailscale_auth_key = var.tailscale_auth_key
+    traefik_public_ip  = data.aws_eip.k3s_master.public_ip
   })
 
   vpc_security_group_ids = [aws_security_group.k3s_sg.id]
