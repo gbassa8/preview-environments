@@ -1,18 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: app-prueba
+  name: simon-game
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/gbassa8/preview-environments.git
     targetRevision: HEAD
-    path: gitops/services/app-prueba
+    path: gitops/services/simon-game/prod
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: simon-game
   syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
     automated:
       selfHeal: true
       prune: true

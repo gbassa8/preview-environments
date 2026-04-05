@@ -14,7 +14,7 @@
 
 !/gitops/
 !/gitops/apps/
-!/gitops/apps/*
+!/gitops/apps/*.yaml
 !/gitops/platform/
 !/gitops/platform/**
 !/gitops/services/

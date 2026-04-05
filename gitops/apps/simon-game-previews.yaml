@@ -1,0 +1,72 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: simon-game-preview
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+    - pullRequest:
+        github:
+          owner: gbassa8
+          repo: simon-game
+        requeueAfterSeconds: 60
+  template:
+    metadata:
+      name: 'simon-game-preview-{{.number}}'
+      namespace: argocd
+      labels:
+        app.kubernetes.io/name: simon-game
+        preview: 'true'
+        pr-number: '{{.number}}'
+        branch-slug: '{{.branch_slug}}'
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/gbassa8/preview-environments.git
+        targetRevision: HEAD
+        path: gitops/services/simon-game/base
+        kustomize:
+          commonLabels:
+            preview: 'true'
+            pr-number: '{{.number}}'
+            branch-slug: '{{.branch_slug}}'
+          patches:
+            - target:
+                kind: ConfigMap
+                name: simon-game-config
+              patch: |-
+                - op: replace
+                  path: /data/database-schema
+                  value: preview_pr_{{.number}}
+            - target:
+                kind: Deployment
+                name: simon-game
+              patch: |-
+                - op: replace
+                  path: /spec/template/spec/containers/0/image
+                  value: ghcr.io/gbassa8/simon-game:pr-{{.number}}
+            - target:
+                kind: Ingress
+                name: simon-game
+              patch: |-
+                - op: replace
+                  path: /metadata/annotations/external-dns.alpha.kubernetes.io~1hostname
+                  value: {{.branch_slug}}.preview.simongame.live
+                - op: replace
+                  path: /spec/tls/0/hosts/0
+                  value: {{.branch_slug}}.preview.simongame.live
+                - op: replace
+                  path: /spec/rules/0/host
+                  value: {{.branch_slug}}.preview.simongame.live
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'simon-game-pr-{{.number}}'
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true

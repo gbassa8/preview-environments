@@ -10,6 +10,7 @@ txtOwnerId: athenea
 
 domainFilters:
   - serviciosimpositivos.com.ar
+  - simongame.live
 
 env:
   - name: CF_API_TOKEN

@@ -1,0 +1,16 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
+  name: simon-game-runtime
+spec:
+  encryptedData:
+    database-url: AgABXoABJbTUla6Dit0jARCctz3fjndg8V9ZRPbd7/XcuDaO1qIa6olpf7datrubbuirjLa6xphUalGnsnkLMXf44EDweaU++8fVfdB04f4UaxZ433QFFnb6rdUDYkOqJldU1PK0ssp43wbV1kZA+/zkQZWZnkSn+yYKPY5MOD/KdTYiHgknK18j/6ExmAFx0aBBE7sbbbdFiVikOkf7oqongW/9ZH6RMlR0OmVWjVnDl/M0/Yc+ccO1Ay82qqF66QIgiUL3oRgbuqHeZVWyNMRR1bbnahyNUp2bjbGVSPTvQbNU6A1/HMrJbgstSSWvA8b+cnJ/Gfsl/dziabhYoQk1HtzD1xvRyrM3aYt/XpnjlrrQWqUwdgdAgdCS/iVI4BX+Vv8iLKYZoT+W3alRmuU7mZVjRe68M8ndoOVUP/Y9cVADPtSbkaeCAkv0zgyjaDVORUOYbbsASaIXIaJf5rWpizmimCo1JO/AN3LJk10bZDA1m8e05GJwGFydPbFn6JfKJnzWd6ZXWmsmqZXbypjdh4G/xJ6Ro/IDz1VSgvtUbgo3jQBp3SHjffI6kEkmAoRz0XWfLNzUJzMwDd0XZu2n3C6hgvMdjDrJ+nltJB63/Z7EI3yC3H3JS9rcAkda36QQnyM0pQUS27FlJQd4wP7AGCmutKDqwHS7gykGDiit+t9h1EBlWYdzV8bcz0I5BcKaAWJWoqXn5zihs4s7ljT8/sUuUqVN3MI9O/kXYnLOU9+aH0hQC6pQA5MzqnZwsFiLjWV8cuSboZyPMS4C9Y9BkfK4rJNdvuuTO9VnGRCeh8tyl8ih42O14TVRh+l2gZHFQkTQVyX1ujg4bOeSwiJ1vlFuhCQQyNNhQejt9g==
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      name: simon-game-runtime
+    type: Opaque

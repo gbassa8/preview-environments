@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: simon-game
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    external-dns.alpha.kubernetes.io/hostname: simongame.live
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - simongame.live
+      secretName: simon-game-live-tls
+  rules:
+    - host: simongame.live
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: simon-game
+                port:
+                  number: 80

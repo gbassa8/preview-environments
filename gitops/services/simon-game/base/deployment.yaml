@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simon-game
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: simon-game
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: simon-game
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull
+      containers:
+        - name: simon-game
+          image: ghcr.io/gbassa8/simon-game:sha-infra-not-set
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PORT
+              value: "8080"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: simon-game-runtime
+                  key: database-url
+            - name: DATABASE_SCHEMA
+              valueFrom:
+                configMapKeyRef:
+                  name: simon-game-config
+                  key: database-schema
