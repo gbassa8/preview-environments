@@ -13,12 +13,12 @@ write_files:
         namespace: kube-system
       spec:
         valuesContent: |-
+          additionalArguments:
+            - --providers.kubernetesingress.ingressendpoint.ip=${traefik_public_ip}
           providers:
             kubernetesIngress:
               publishedService:
                 enabled: false
-              ingressEndpoint:
-                ip: ${traefik_public_ip}
 
 runcmd:
   - curl -fsSL https://tailscale.com/install.sh | sh

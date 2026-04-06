@@ -35,6 +35,13 @@ spec:
             branch-slug: '{{.branch_slug}}'
           patches:
             - target:
+                kind: Namespace
+                name: simon-game
+              patch: |-
+                - op: replace
+                  path: /metadata/name
+                  value: simon-game-pr-{{.number}}
+            - target:
                 kind: ConfigMap
                 name: simon-game-config
               patch: |-
@@ -65,8 +72,6 @@ spec:
         server: https://kubernetes.default.svc
         namespace: 'simon-game-pr-{{.number}}'
       syncPolicy:
-        syncOptions:
-          - CreateNamespace=true
         automated:
           prune: true
           selfHeal: true
