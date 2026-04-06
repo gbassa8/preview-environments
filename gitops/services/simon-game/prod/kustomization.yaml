@@ -8,4 +8,4 @@ resources:
 
 images:
   - name: ghcr.io/gbassa8/simon-game
-    newTag: sha-c4212b30a7fbb26b5d2ccd9cc4c84cd29d549144
+    newTag: sha-75877f10a7abb9119c16174e791ad7070851566d
